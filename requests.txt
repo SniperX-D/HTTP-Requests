@@ -1,0 +1,204 @@
+Req_1:
+GET /typicode/demo/comments HTTP/1.1
+Host: my-json-server.typicode.com
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Connection: close
+Upgrade-Insecure-Requests: 1
+--------------------------------------------------------------------------------
+Res_1:
+HTTP/1.1 200 OK
+Date: Fri, 18 Dec 2020 12:29:18 GMT
+Content-Type: application/json; charset=utf-8
+Connection: close
+X-Powered-By: Express
+Vary: Origin, Accept-Encoding
+Access-Control-Allow-Credentials: true
+Cache-Control: no-cache
+Pragma: no-cache
+Expires: -1
+X-Content-Type-Options: nosniff
+Etag: W/"86-18slOJOX02etNirVFOYXk7oH1sQ"
+Via: 1.1 vegur
+CF-Cache-Status: DYNAMIC
+cf-request-id: 07176c815b00000621393ee000000001
+Expect-CT: max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+Report-To: {"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report?s=jJi7df3%2Fa1ejycksAzCRIPO5xwzsZh%2BAQlZvkL8luA%2FBfghX6S3Fd9Pf0jGClmRJFchdleR5IvqCpjpjXdT8ECOMnDzqLdypSMIoj49xQ5KurJ9RPjQaUCBn0cw%3D"}],"group":"cf-nel","max_age":604800}
+NEL: {"report_to":"cf-nel","max_age":604800}
+Server: cloudflare
+CF-RAY: 6038e37bc96b0621-FRA
+Content-Length: 134
+
+[
+  {
+    "id": 1,
+    "body": "some comment",
+    "postId": 1
+  },
+  {
+    "id": 2,
+    "body": "some comment",
+    "postId": 1
+  }
+]
+--------------------------------------------------------------------------------
+Req_2:
+GET /typicode/demo/comments HTTP/1.1
+Host: my-json-server.typicode.com
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Referer: https://my-json-server.typicode.com/typicode/demo
+Connection: close
+Upgrade-Insecure-Requests: 1
+--------------------------------------------------------------------------------
+Req_3:
+GET /typicode/demo/profile HTTP/1.1
+Host: my-json-server.typicode.com
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Referer: https://my-json-server.typicode.com/typicode/demo
+Connection: close
+Upgrade-Insecure-Requests: 1
+--------------------------------------------------------------------------------
+Res_2:
+HTTP/1.1 200 OK
+Date: Fri, 18 Dec 2020 12:39:13 GMT
+Content-Type: application/json; charset=utf-8
+Connection: close
+X-Powered-By: Express
+Vary: Origin, Accept-Encoding
+Access-Control-Allow-Credentials: true
+Cache-Control: no-cache
+Pragma: no-cache
+Expires: -1
+X-Content-Type-Options: nosniff
+Via: 1.1 vegur
+CF-Cache-Status: DYNAMIC
+cf-request-id: 07177597aa000096cea1079000000001
+Expect-CT: max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+Report-To: {"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report?s=D9o9RUG6BsREBoC9r5OsvUGhY4uKZ0CRYHvsJoalTR0nDg9zHydw16zLQg9TyA5e1imX%2Btr7Y%2BFPGzGMoban2nK1dlzdhfxwIKbemGU0iH0%2BlbDk%2BUXkzu4KGE0%3D"}],"group":"cf-nel","max_age":604800}
+NEL: {"report_to":"cf-nel","max_age":604800}
+Server: cloudflare
+CF-RAY: 6038f205db0796ce-FRA
+Content-Length: 134
+
+[
+  {
+    "id": 1,
+    "body": "some comment",
+    "postId": 1
+  },
+  {
+    "id": 2,
+    "body": "some comment",
+    "postId": 1
+  }
+]
+--------------------------------------------------------------------------------
+Res_3:
+HTTP/1.1 200 OK
+Date: Fri, 18 Dec 2020 12:39:59 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 24
+Connection: close
+X-Powered-By: Express
+Vary: Origin, Accept-Encoding
+Access-Control-Allow-Credentials: true
+Cache-Control: no-cache
+Pragma: no-cache
+Expires: -1
+X-Content-Type-Options: nosniff
+Via: 1.1 vegur
+CF-Cache-Status: DYNAMIC
+cf-request-id: 071776480100002ba1aaabd000000001
+Expect-CT: max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+Report-To: {"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report?s=YVlAJgTqKFa65JqkiDZZINctGxl6Tfzdm3WMOswm1JVUDmMIpSxbCItEqKf0PlfvLW6PKMdhaT%2BAUY1Ih4qtFFJ4T0Tq95RSRdsSZmgQzO2JT1kSQP5woqByehs%3D"}],"group":"cf-nel","max_age":604800}
+NEL: {"report_to":"cf-nel","max_age":604800}
+Server: cloudflare
+CF-RAY: 6038f3200dde2ba1-FRA
+
+{
+  "name": "typicode"
+}
+--------------------------------------------------------------------------------
+Req_4:
+GET /typicode/demo/comments?id=1 HTTP/1.1
+Host: my-json-server.typicode.com
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Connection: close
+Upgrade-Insecure-Requests: 1
+Cache-Control: max-age=0
+--------------------------------------------------------------------------------
+Res_4:
+HTTP/1.1 200 OK
+Date: Fri, 18 Dec 2020 12:42:27 GMT
+Content-Type: application/json; charset=utf-8
+Connection: close
+X-Powered-By: Express
+Vary: Origin, Accept-Encoding
+Access-Control-Allow-Credentials: true
+Cache-Control: no-cache
+Pragma: no-cache
+Expires: -1
+X-Content-Type-Options: nosniff
+Etag: W/"44-AhZzXbkmpq/9WjXR6201BHgCRws"
+Via: 1.1 vegur
+CF-Cache-Status: DYNAMIC
+Expect-CT: max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+Report-To: {"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report?s=ceK3%2FmoopfnB5jU8JUJzacIvwhZMPc42SwUb7q0Fxv6TZ%2FjLFp1tkIe6lwD9RP0pWqRWo7%2F6wTJVnm4yUQ9grFDr1r1gtlDXQDnXtPwNIlGw3IEwg9uc0DChijM%3D"}],"group":"cf-nel","max_age":604800}
+NEL: {"report_to":"cf-nel","max_age":604800}
+Server: cloudflare
+CF-RAY: 6038f6be5edabf00-FRA
+Content-Length: 68
+
+[
+  {
+    "id": 1,
+    "body": "some comment",
+    "postId": 1
+  }
+]
+--------------------------------------------------------------------------------
+Req_5:
+GET /?XDEBUG_SESSION_START=phpstorm HTTP/1.1
+Host: HONEYPOT
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36
+Accept-Encoding: gzip
+Connection: close
+--------------------------------------------------------------------------------
+Req_6:
+POST /boaform/admin/formLogin HTTP/1.1
+Host: HONEYPOT
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:71.0) Gecko/20100101 Firefox/71.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-GB,en;q=0.5
+Accept-Encoding: gzip, deflate
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 29
+Origin: http://HONEYPOT
+Connection: keep-alive
+Referer: http://HONEYPOT/admin/login.asp
+Upgrade-Insecure-Requests: 1
+
+username=admin&psd=Feefifofum
+--------------------------------------------------------------------------------
+Req_7:
+POST /api/jsonws/invoke HTTP/1.1
+Host: HONEYPOT
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36
+Content-Length: 20
+Content-Type: application/json
+Accept-Encoding: gzip
+Connection: close
+
+{"test":"testing..."}
+--------------------------------------------------------------------------------
