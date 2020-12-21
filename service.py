@@ -4,7 +4,7 @@ import json
 from itertools import izip
 
 #headers that are not intended to contain argumnets
-skip_headers = ["Accept","Connection","Host","User-Agent","Accept-Encoding","Accept-Language","Referer","Content-Type","Contnet-Length","Access-Control","X-Powered-By", "Content-Length","Cache-Control"]
+skip_headers = ["HOST","Accept","Connection","Host","User-Agent","Accept-Encoding","Accept-Language","Referer","Content-Type","Contnet-Length","Access-Control","X-Powered-By", "Content-Length","Cache-Control"]
 
 #tries to parse data into json, on error that means its no json
 def parse_json(data):
@@ -39,7 +39,7 @@ def parse_args(data):
 
 #handles the request, prints the endpoint, the method and arguments in the: url,headers,body of post
 #prints and returns request type,endpoint and a dict of arguments
-def handle_request(data,key): 
+def handle_request(data): 
 	data_arr = data[0].split(" ")
 	request_type = data_arr[0] #request type is the first string in http request
 	parms = {} #parms dictionary, for 
@@ -47,13 +47,9 @@ def handle_request(data,key):
 	is_json = False
 	raw_args = []
 	if "?" in data_arr[1]: #parse arguments in url
-		temp = data_arr[1].split("?") #if the arguments look like: /endpoint?search=what+is+http+request
-		if "&" in data_arr[1]: #if there are multiple arguments, ex: /endpoint?search=what+is+http+request&help=pls
-			raw_args.extend(temp[1].split("&"))
-			endpoint = temp[0]
-		else: #one argument only
-			raw_args.append(temp[1])
-			endpoint = temp[0]
+		temp = data_arr[1].split("?") #if the arguments look like: /endpoint?search=what+is+http+request , /endpoint?Test=True&message=hello
+		raw_args.extend(temp[1].split("&"))
+		endpoint = temp[0]
 		args_bool = True #there are arguments
 	#parse arguments in method which doesnt send arguments in url
 	else:
@@ -67,10 +63,7 @@ def handle_request(data,key):
 	args_bool = is_json
 	if not is_json:
 		if "=" in args: #if the arguments look like: username=hello&passowrd=world!
-			if "&" in args: #if there are multiple arguments, ex: username=hello&passowrd=world!
-				raw_args.extend(args.split("&"))
-			else: #one argument only like: message=hello%20there
-				raw_args.append(args)
+			raw_args.extend(args.split("&"))
 			args_bool = True
 	
 	if len(raw_args): #are there any arguments in the request?
@@ -80,7 +73,6 @@ def handle_request(data,key):
 	if is_json:
 		parms.update(json_args)
 	
-	'''#need to be fixed
 	#add arguments from headers, adds H_ for each key for marking as header argument:
 	is_json = False
 	for line in data[1:]:
@@ -106,12 +98,11 @@ def handle_request(data,key):
 				for arg in args_list:
 					temp = arg.split("=")
 					parms["H_"+temp[0]]=temp[1]
-			elif "=" in header[1]: #one argument
+			elif "=" in header[1]: #one argument, had to do that because there are arguments without "=" and arent really usful
 				temp = args.split("=")
 				parms["H_"+temp[0]]=temp[1]
-	'''
 				
-	print("------------------------------http request %s ------------------------------" %key[-1]) #prints header for making it look nice
+	print("------------------------------http request------------------------------") #prints header for making it look nice
 	print("Method: %s" %(request_type)) #request type
 	print("endpoint: %s" %(endpoint)) #endpoint
 	print("arguments: %s" %(parms)) #parms as a dictionary of arguments
@@ -119,8 +110,8 @@ def handle_request(data,key):
 	return request_type,endpoint,parms
 	
 #handles the response, prints and returns the payload as json
-def handle_response(data,key): 
-	print("------------------------------http response %s------------------------------" %key[-1]) #prints header for making it look nice
+def handle_response(data): 
+	print("------------------------------http response------------------------------") #prints header for making it look nice
 	payload = parse_args(data)
 	is_json, json_dict = parse_json(payload)
 	if is_json:
@@ -156,22 +147,42 @@ def main():
 		x = threading.Thread(target=handle_data, args=(data,conn,addr))
 		x.start()
 '''
-
-def main(): #main function, iteretes in the requests.txt file and parses the lines into a list of headers
-	requests_dict = {}
+#main function, iteretes in the requests.txt file and parses the lines into a list of headers. the function collects requests by line order and then searchs for the next response
+def main(): 
+	is_request = True #boolean variable to collect requests and not responses
+	is_response = False
+	skip_responses = 0 #how much responses to skip till next response
 	with open("requests.txt",'r') as requests_file:
-		raw_request = []
-		for line in requests_file:
-			if "-"*80 in line: #each request ends with CR-LF, after that its sends the request that has been colected to the handler and then zero the raw_request parm for new one
-				temp = raw_request[1:] #without the request number header
-				requests_dict[raw_request[0][:-1]] = temp #the key is the header, which is Req_1,Res_2,Req_3...
-				raw_request = [] #zero the array
-			else:
-				raw_request.append(str(line.rstrip("\n")))
-	sorted_requests = sorted(list(requests_dict))
-	sorted_requests.sort(key = lambda x: int(x.rsplit('_',1)[1])) #sorts by req,res and their number, ex: req_1, res_1
-	for key in sorted_requests:
-		handle_data(requests_dict[key],key)
+		raw_request = [] #saves raw requests and raw responses...
+		lines = requests_file.readlines() #lines from the file "loaded" into memory (could use another file description but had to skip some amount of files)
+		for line_num,line in enumerate(lines):
+			if "HTTP" in line and not line.startswith("HTTP") and not is_request: #is it a request?
+				is_request = True #read it!
+			elif "HTTP" in line and line.startswith("HTTP") and skip_responses > 0: #skips responses what were already printed, ex: (">" is where the loop is) req_1,req_2,res_1,>res_2,req_3,res_3 and skip_responses = 1, so it decrices skip_response by one so it wont skip res_3 later
+				skip_responses -=1
+			if is_request:
+				if "-"*80 in line: #each request ends with CR-LF, after that its sends the request that has been colected to the handler and then zero the raw_request parm for new one
+					handle_request(raw_request)
+					raw_request = [] #zero the array
+					for res_line_index in range(line_num+1, len(lines)):
+						if "HTTP" in lines[res_line_index] and lines[res_line_index].startswith("HTTP") and not is_response:
+							if skip_responses <= 0: #skips http responses, ex: (">" where is the loop pointer and "--" what needs to printed) >req_2,req_3,res_1,--res_2,res_3, loop read and printed req_2, needs to skip res_1 to read res_2 
+								is_response = True #you can read the response and not skip to the next one
+							else:
+								skip_responses -= 1 #the loop already read a response, need to skip to the next
+						elif is_response:
+							if "-"*80 in lines[res_line_index]: #CR-LF after responses
+								handle_response(raw_request)
+								raw_request = []
+								is_response = False
+								skip_responses += 1 #means the loop needs to skip 1 response so it will print the next response right after this one
+								break
+							elif is_response: #append the lines into raw_request
+								raw_request.append(lines[res_line_index].rstrip("\n"))
+					is_request = False #incase of next http payload is a response so it wont collect it
+				else:
+					raw_request.append(str(line.rstrip("\n")))
+
 			
 if __name__ == "__main__":
 	main()
